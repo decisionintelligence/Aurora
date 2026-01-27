@@ -1,0 +1,52 @@
+# lightning==2.3.0.dev0
+seed_everything: 1
+trainer:
+  accelerator: gpu
+  devices: 1
+  strategy: auto
+  max_epochs: 50
+  use_distributed_sampler: false
+  limit_train_batches: 100
+  log_every_n_steps: 1
+  check_val_every_n_epoch: 1
+  default_root_dir: ./results
+  accumulate_grad_batches: 1
+  gradient_clip_val: 0.5
+model:
+  forecaster:
+    class_path: probts.model.forecaster.prob_forecaster.flame.FLAME
+    init_args:
+      dec_layers: 1
+      couple_layers: 3
+      d_model: 256
+      expand: 2
+      d_ff: 512
+      d_couple: 128
+      head_dim: 64
+      d_conv: 4
+      hidden_size: 256
+      freq: h
+      factor: 1
+      activation: gelu
+      patch_len: 24
+      dropout: 0.1
+      head_dropout: 0.1
+      loss: MAE
+      num_experts: 10
+      noisy_gating: true
+      k: 5
+      learnable: true
+      alpha: 0.1
+  num_samples: 100
+  learning_rate: 0.0001
+  quantiles_num: 20
+data:
+  data_manager:
+    class_path: probts.data.data_manager.DataManager
+    init_args:
+      dataset: solar_nips
+      split_val: true
+      scaler: standard # identity, standard, temporal
+  batch_size: 32
+  test_batch_size: 32
+  num_workers: 8

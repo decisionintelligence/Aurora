@@ -1,0 +1,10 @@
+model_path="/home/Aurora/aurora"
+batch_size=256
+
+python ./scripts/run_benchmark.py --config-path "fixed_forecast_config_yearly.json"   --model-name  "aurora.Aurora"  --model-hyper-params "{\"batch_size\":${batch_size},\"inference_token_len\":24,\"model_path\":\"${model_path}\"}" --save-path "yearly"   --gpus 0  --num-workers 1 --timeout 60000 &
+python ./scripts/run_benchmark.py --config-path "fixed_forecast_config_quarterly.json"   --model-name  "aurora.Aurora"  --model-hyper-params "{\"batch_size\":${batch_size},\"inference_token_len\":24,\"model_path\":\"${model_path}\"}" --save-path "quarterly"   --gpus 1  --num-workers 1 --timeout 60000 &
+python ./scripts/run_benchmark.py --config-path "fixed_forecast_config_monthly.json"  --model-name  "aurora.Aurora"  --model-hyper-params "{\"batch_size\":${batch_size},\"inference_token_len\":24,\"model_path\":\"${model_path}\"}" --save-path "monthly"   --gpus 2  --num-workers 1 --timeout 60000 &
+python ./scripts/run_benchmark.py --config-path "fixed_forecast_config_weekly.json"  --model-name  "aurora.Aurora"  --model-hyper-params "{\"batch_size\":${batch_size},\"inference_token_len\":12,\"model_path\":\"${model_path}\"}" --save-path "weekly"   --gpus 3  --num-workers 1 --timeout 60000 &
+python ./scripts/run_benchmark.py --config-path "fixed_forecast_config_daily.json"   --model-name  "aurora.Aurora"  --model-hyper-params "{\"batch_size\":${batch_size},\"inference_token_len\":42,\"model_path\":\"${model_path}\"}" --save-path "daily"   --gpus 4  --num-workers 1 --timeout 60000 &
+python ./scripts/run_benchmark.py --config-path "fixed_forecast_config_hourly.json"  --model-name  "aurora.Aurora"  --model-hyper-params "{\"batch_size\":${batch_size},\"inference_token_len\":48,\"model_path\":\"${model_path}\"}" --save-path "hourly"   --gpus 5  --num-workers 1 --timeout 60000 &
+python ./scripts/run_benchmark.py --config-path "fixed_forecast_config_other.json"    --model-name  "aurora.Aurora"  --model-hyper-params "{\"batch_size\":${batch_size},\"inference_token_len\":32,\"model_path\":\"${model_path}\"}" --save-path "other"   --gpus 6  --num-workers 1 --timeout 60000 &

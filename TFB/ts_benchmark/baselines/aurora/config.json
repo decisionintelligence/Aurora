@@ -1,0 +1,37 @@
+{
+  "_name_or_path": "aurora_base",
+  "architectures": [
+    "AuroraForPrediction"
+  ],
+  "auto_map": {
+    "AutoConfig": "configuration_aurora.AuroraConfig",
+    "AutoModelForCausalLM": "modeling_aurora.AuroraForPrediction"
+  },
+  "dropout_rate": 0.2,
+  "hidden_act": "silu",
+  "hidden_size": 256,
+  "token_len": 48,
+  "intermediate_size": 512,
+  "max_position_embeddings": 10000,
+  "model_type": "aurora",
+  "num_attention_heads": 8,
+  "num_enc_layers": 1,
+  "num_dec_layers": 9,
+  "rope_theta": 10000,
+  "torch_dtype": "float32",
+  "transformers_version": "4.40.1",
+  "num_sampling_steps": 50,
+  "flow_loss_depth": 3,
+  "diffusion_batch_mul": 4,
+  "threshold_ratio": [0.2, 0.3, 0.4, 0.5],
+  "mask_ratio": 0.5,
+  "norm_mode": "batch",
+  "num_prototypes": 1000,
+  "num_retriever_enc_layers": 1,
+  "num_retriever_dec_layers": 1,
+  "num_text_cross_layers": 1,
+  "num_vision_cross_layers": 1,
+  "num_text_connect_layers": 1,
+  "num_vision_connect_layers": 1,
+  "num_distill": 10
+}
