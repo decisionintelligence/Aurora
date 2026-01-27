@@ -1,6 +1,6 @@
 # <img src="doc/logo.png" alt="Image description" style="width:55px;height:55px;"> Aurora: Towards Universal Generative Multimodal Time Series Forecasting
 
-**The official code repo of our ICLR 26's paper: [Aurora: Towards Universal Generative Multimodal Time Series Forecasting](https://arxiv.org/pdf/2509.22295) **
+**The official code repo of our ICLR 26's paper: [Aurora: Towards Universal Generative Multimodal Time Series Forecasting](https://arxiv.org/pdf/2509.22295)**
 
 [![ICLR](https://img.shields.io/badge/ICLR'26-Aurora-orange)](https://arxiv.org/pdf/2509.22295)  [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)  [![PyTorch](https://img.shields.io/badge/PyTorch-2.4.1-blue)](https://pytorch.org/)  ![Stars](https://img.shields.io/github/stars/decisionintelligence/Aurora) 
 
