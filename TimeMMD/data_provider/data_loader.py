@@ -11,7 +11,7 @@ from utils.timefeatures import time_features
 
 warnings.filterwarnings('ignore')
 GLOBAL_TOKENIZER = BertTokenizer.from_pretrained(
-    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'aurora/bert_config'))
+    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'aurora/bert_config'), local_files_only=True)
 
 
 class Dataset_TimeMMD(Dataset):

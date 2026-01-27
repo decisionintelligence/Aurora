@@ -9,7 +9,7 @@ from transformers.utils import ModelOutput
 
 
 class TSGenerationMixin(GenerationMixin):
-    tokenizer = BertTokenizer.from_pretrained(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bert_config'))
+    tokenizer = BertTokenizer.from_pretrained(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bert_config'), local_files_only=True)
 
     @torch.no_grad()
     def generate(
