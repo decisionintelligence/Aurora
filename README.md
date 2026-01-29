@@ -23,8 +23,45 @@ In this work, we pretrain Aurora in a cross-modality paradigm, which adopts Chan
 <div align="center">
 <img alt="arch" src="doc/arch.png" width="80%"/>
 </div>
-
 ## Quickstart
+
+#### From pypi (recommended)
+
+We have publised Aurora on PyPi, **you can directly install it with one line of code!**
+
+```shell
+$ pip install aurora-model==0.1.0
+```
+
+Then you can use the Aurora model to make zero-shot probabilistic forecasting!
+
+```python
+from aurora import load_model
+import os
+# os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
+model = load_model()
+
+# prepare input
+batch_size, lookback_length = 1, 528 
+seqs = torch.randn(batch_size, lookback_length)
+
+# Note that Sundial can generate multiple probable predictions
+forecast_length = 96 
+num_samples = 100
+
+
+# For inference_token_len, you can refer to LightGTS (Periodic Patching).
+# We recommend to use the period length as the inference_token_len.
+output = model.generate(inputs=seqs, max_output_length=forecast_length, num_samples=num_samples, inference_token_len=48)
+
+
+# use raw predictions for mean/quantiles/confidence-interval estimation
+print(output.shape) 
+```
+
+
+
+#### From raw code
 
 We release the original code of Aurora in this repo. You can also download the pretrained checkpoints in our [huggingface](https://huggingface.co/DecisionIntelligence/Aurora) repo and put them in the folder: aurora/.
 
@@ -34,6 +71,68 @@ If you want to pretrain an Aurora on your own time series corpus, you need to in
 $ pip install torch==2.4.0
 $ pip install torchvision==0.19.0
 $ pip install transformers[torch]
+```
+
+```python
+from huggingface_hub import snapshot_download
+import os
+# os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
+
+# --- Configuration ---
+repo_id = "DecisionIntelligence/Aurora" 
+
+# Target directory for the download. "." represents the current working directory.
+local_dir = "./work_dir" 
+
+# Optional: Set repo_type to "dataset" or "space" if you are not downloading a model.
+repository_type = "model" 
+# ---------------------
+
+# Ensure the local directory exists before starting the download
+if not os.path.exists(local_dir):
+    os.makedirs(local_dir)
+    print(f"Created directory: {local_dir}")
+
+print(f"Starting download from '{repo_id}' to '{local_dir}'...")
+
+try:
+    # snapshot_download handles the download of all files in the repository
+    download_path = snapshot_download(
+        repo_id=repo_id,
+        local_dir=local_dir,
+        # Set to False to download actual files instead of symbolic links
+        local_dir_use_symlinks=False, 
+        repo_type=repository_type,
+        # Use your HF access token for private/gated repositories
+        token=None 
+    )
+    print(f"\nSuccess! All files downloaded to: {download_path}")
+
+except Exception as e:
+    print(f"\nAn error occurred during download: {e}")
+
+# Then you can easily make zero-shot forecasts using Aurora
+
+from modeling_aurora import AuroraForPrediction
+
+model = AuroraForPrediction.from_pretrained("./",trust_remote_code=True)
+
+# prepare input
+batch_size, lookback_length = 1, 528 
+seqs = torch.randn(batch_size, lookback_length)
+
+# Note that Sundial can generate multiple probable predictions
+forecast_length = 96 
+num_samples = 100
+
+
+# For inference_token_len, you can refer to LightGTS (Periodic Patching).
+# We recommend to use the period length as the inference_token_len.
+output = model.generate(inputs=seqs, max_output_length=forecast_length, num_samples=num_samples, inference_token_len=48)
+
+
+# use raw predictions for mean/quantiles/confidence-interval estimation
+print(output.shape) 
 ```
 
 
