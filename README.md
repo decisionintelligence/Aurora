@@ -29,7 +29,7 @@ In this work, we pretrain Aurora in a cross-modality paradigm, which adopts Chan
 
 #### From pypi (recommended)
 
-We have publised Aurora on PyPi, **you can directly install it with one line of code!**
+We have published Aurora on PyPi, **you can directly install it with one line of code!**
 
 ```shell
 $ pip install aurora-model==0.1.0
@@ -37,15 +37,20 @@ $ pip install aurora-model==0.1.0
 
 Then you can use the Aurora model to make zero-shot probabilistic forecasting!
 
+
+
+##### Unimodal Time Series Forecasting
+
 ```python
 from aurora import load_model
 import os
+import torch
 # os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
 model = load_model()
 
 # prepare input
 batch_size, lookback_length = 1, 528 
-seqs = torch.randn(batch_size, lookback_length)
+seqs = torch.randn(batch_size, lookback_length).cuda()
 
 # Note that Sundial can generate multiple probable predictions
 forecast_length = 96 
@@ -55,6 +60,55 @@ num_samples = 100
 # For inference_token_len, you can refer to LightGTS (Periodic Patching).
 # We recommend to use the period length as the inference_token_len.
 output = model.generate(inputs=seqs, max_output_length=forecast_length, num_samples=num_samples, inference_token_len=48)
+
+
+# use raw predictions for mean/quantiles/confidence-interval estimation
+print(output.shape) 
+
+```
+
+
+
+##### Multimodal Time Series Forecasting
+
+```python
+from aurora import load_model
+from einops import rearrange
+import os
+import torch
+# os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
+model = load_model()
+tokenizer = model.tokenizer
+
+# prepare input
+batch_size, n_vars, lookback_length, max_text_length = 1, 10, 528, 200
+seqs = torch.randn(batch_size, lookback_length, n_vars).cuda()
+
+text = "1983-09-12: The Federal Register provides a uniform system for making available to the public regulations and legal notices issued by federal agencies in the United States."
+
+tokenized_text = tokenizer(text, padding='max_length', truncation=True, max_length=max_text_length, return_tensors="pt")
+text_input_ids = tokenized_text['input_ids'].cuda()
+text_attention_mask = tokenized_text['attention_mask'].cuda()
+text_token_type_ids = tokenized_text.get('token_type_ids', torch.zeros_like(text_input_ids)).cuda()
+    
+batch_input_ids = text_input_ids.repeat(n_vars, 1)
+batch_attention_mask = text_attention_mask.repeat(n_vars, 1)
+batch_token_type_ids = text_token_type_ids.repeat(n_vars, 1)
+batch_x = rearrange(seqs, "b l c -> (b c) l")
+
+# Note that Sundial can generate multiple probable predictions
+forecast_length = 96 
+num_samples = 100
+
+
+# For inference_token_len, you can refer to LightGTS (Periodic Patching).
+# We recommend to use the period length as the inference_token_len.
+output = model.generate(inputs=batch_x,text_input_ids=batch_input_ids,
+											  text_attention_mask=batch_attention_mask,
+                        text_token_type_ids=batch_token_type_ids,
+  										  max_output_length=forecast_length, 
+  											num_samples=num_samples, 
+  											inference_token_len=48)
 
 
 # use raw predictions for mean/quantiles/confidence-interval estimation
@@ -78,6 +132,7 @@ $ pip install transformers[torch]
 ```python
 from huggingface_hub import snapshot_download
 import os
+import torch
 # os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
 
 # --- Configuration ---
@@ -121,7 +176,7 @@ model = AuroraForPrediction.from_pretrained("./",trust_remote_code=True)
 
 # prepare input
 batch_size, lookback_length = 1, 528 
-seqs = torch.randn(batch_size, lookback_length)
+seqs = torch.randn(batch_size, lookback_length).cuda()
 
 # Note that Sundial can generate multiple probable predictions
 forecast_length = 96 
