@@ -23,6 +23,8 @@ In this work, we pretrain Aurora in a cross-modality paradigm, which adopts Chan
 <div align="center">
 <img alt="arch" src="doc/arch.png" width="80%"/>
 </div>
+
+
 ## Quickstart
 
 #### From pypi (recommended)
