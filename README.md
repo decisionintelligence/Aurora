@@ -104,11 +104,11 @@ num_samples = 100
 # For inference_token_len, you can refer to LightGTS (Periodic Patching).
 # We recommend to use the period length as the inference_token_len.
 output = model.generate(inputs=batch_x,text_input_ids=batch_input_ids,
-											  text_attention_mask=batch_attention_mask,
+                        text_attention_mask=batch_attention_mask,
                         text_token_type_ids=batch_token_type_ids,
-  										  max_output_length=forecast_length, 
-  											num_samples=num_samples, 
-  											inference_token_len=48)
+                        max_output_length=forecast_length, 
+                        num_samples=num_samples, 
+                        inference_token_len=48)
 
 
 # use raw predictions for mean/quantiles/confidence-interval estimation
