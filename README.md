@@ -52,7 +52,7 @@ model = load_model()
 batch_size, lookback_length = 1, 528 
 seqs = torch.randn(batch_size, lookback_length).cuda()
 
-# Note that Sundial can generate multiple probable predictions
+# Note that Aurora can generate multiple probable predictions
 forecast_length = 96 
 num_samples = 100
 
@@ -96,7 +96,7 @@ batch_attention_mask = text_attention_mask.repeat(n_vars, 1)
 batch_token_type_ids = text_token_type_ids.repeat(n_vars, 1)
 batch_x = rearrange(seqs, "b l c -> (b c) l")
 
-# Note that Sundial can generate multiple probable predictions
+# Note that Aurora can generate multiple probable predictions
 forecast_length = 96 
 num_samples = 100
 
@@ -178,7 +178,7 @@ model = AuroraForPrediction.from_pretrained("./",trust_remote_code=True)
 batch_size, lookback_length = 1, 528 
 seqs = torch.randn(batch_size, lookback_length).cuda()
 
-# Note that Sundial can generate multiple probable predictions
+# Note that Aurora can generate multiple probable predictions
 forecast_length = 96 
 num_samples = 100
 
