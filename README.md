@@ -211,7 +211,7 @@ ProbTS/scripts/run_aurora_probts.sh
 # TSFM-Bench
 TFB/scripts/run_aurora_tfb.sh
 
-# TFB univaraite
+# TFB univariate
 TFB/scripts/run_aurora_uni.sh
 ```
 
