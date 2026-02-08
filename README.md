@@ -10,7 +10,7 @@
 
 Aurora is a highly capable multimodal time series foundation model. Based on the **Modality-Guided Multi-head Self-Attention** and  **Prototype-Guided Flow Matching**, Aurora can effectively utilize the domain-specific knowledge contained in modalities and support generative probabilistic forecasting, thus covering versatile forecasting scenarios.
 
-See **Figure 1**, to our best knowldege, Aurora is the first pretrained multimodal time series foundation model! Evaluated on three well-recognized benchmarks, including TimeMMD, TSFM-Bench, and ProbTS, Aurora is demonstrated the state-of-the-art.
+See **Figure 1**, to our best knowldege, Aurora is the first pretrained multimodal time series foundation model! Evaluated on **5** well-recognized benchmarks, including TimeMMD, TSFM-Bench, ProbTS, TFB, and EPF, Aurora is demonstrated the state-of-the-art.
 
 <div align="center">
 <img alt="intro" src="doc/intro.png" width="50%"/>
