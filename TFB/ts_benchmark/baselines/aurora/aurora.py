@@ -1,7 +1,6 @@
 from ts_benchmark.baselines.aurora.modeling_aurora import AuroraForPrediction
 from ts_benchmark.baselines.foundation_forecasting_model_base import FoundationForecastingModelBase
 from einops import rearrange
-
 # model hyper params
 MODEL_HYPER_PARAMS = {
     "model_path": "./",

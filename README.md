@@ -32,7 +32,7 @@ In this work, we pretrain Aurora in a cross-modality paradigm, which adopts Chan
 We have published Aurora on PyPi, **you can directly install it with one line of code!**
 
 ```shell
-$ pip install aurora-model==0.1.0
+$ pip install aurora-model== 0.2.0
 ```
 
 Then you can use the Aurora model to make zero-shot probabilistic forecasting!
