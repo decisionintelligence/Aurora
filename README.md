@@ -32,6 +32,7 @@ In this work, we pretrain Aurora in a cross-modality paradigm, which adopts Chan
 We have published Aurora on PyPi, **you can directly install it with one line of code!**
 
 ```shell
+# python >= 3.10
 $ pip install aurora-model==0.2.0
 ```
 
